@@ -33,7 +33,7 @@ def parse_xml(path: str | Path) -> ExportData:
             raise ValueError("Cookie element is missing its name")
         if not host:
             raise ValueError(f"Cookie '{name}' is missing its host")
-        cookies[f"cookie:{name}:{host}"] = (element.text or "").strip()
+        cookies[f"cookie:{name}:{host}"] = element.text or ""
 
     if not subdomains and not cookies:
         raise ValueError("No subdomains or cookies found in the XML file")

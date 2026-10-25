@@ -75,6 +75,16 @@ def test_last_cookie_with_the_same_key_wins(tmp_path):
     assert parse_xml(path).cookies == {"cookie:sid:shop": "new"}
 
 
+def test_cookie_value_whitespace_is_preserved(tmp_path):
+    path = tmp_path / "config.xml"
+    path.write_text(
+        '<config><cookies><cookie name="sid" host="shop">  abc  </cookie></cookies></config>',
+        encoding="utf-8",
+    )
+
+    assert parse_xml(path).cookies == {"cookie:sid:shop": "  abc  "}
+
+
 def test_cookie_without_a_name_is_rejected(tmp_path):
     path = tmp_path / "config.xml"
     path.write_text('<config><cookie host="shop">abc</cookie></config>', encoding="utf-8")
